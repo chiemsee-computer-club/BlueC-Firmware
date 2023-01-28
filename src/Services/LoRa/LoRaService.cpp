@@ -22,7 +22,7 @@ void LoRaService::Initialize()
 
 std::string LoRaService::ReadMessagePart(int length)
 {
-    std::string message = "";
+    std::string message;
 
     for (int i = 0; i < length; ++i)
     {
@@ -80,7 +80,7 @@ void LoRaService::CheckForNewMessages()
     }
 }
 
-bool LoRaService::SendMessage(Message message)
+bool LoRaService::SendMessage(const Message& message)
 {
     LoRa.beginPacket();
     LoRa.write(MessageType::MessagePacket);

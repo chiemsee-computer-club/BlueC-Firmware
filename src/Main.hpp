@@ -7,6 +7,3 @@
 
 DisplayService *_displayService;
 LoRaService *_loRaService;
-
-void setup();
-void loop();

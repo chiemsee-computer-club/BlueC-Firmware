@@ -27,7 +27,7 @@ public:
     LoRaService();
     ~LoRaService();
 
-    void Initialize();
+    static void Initialize();
     void CheckForNewMessages();
-    bool SendMessage(Message message);
+    bool SendMessage(const Message& message);
 };
