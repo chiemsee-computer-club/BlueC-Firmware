@@ -1,8 +1,8 @@
 #include "LoRaService.hpp"
 
-LoRaService::LoRaService()
+LoRaService::LoRaService(SqliteService *sqliteService)
 {
-
+    _sqliteService = sqliteService;
 }
 
 LoRaService::~LoRaService()
@@ -53,7 +53,6 @@ Message LoRaService::ReadMessageFromRadio()
     return message;
 }
 
-
 void LoRaService::CheckForNewMessages()
 {
     int packetSize = LoRa.parsePacket();
@@ -67,13 +66,19 @@ void LoRaService::CheckForNewMessages()
             case MessageType::MessagePacket:
             {
                 Message message = ReadMessageFromRadio();
-
+                _sqliteService->InsertMessage(&message);
                 break;
             }
 
             case MessageType::AcknowledgmentPacket:
-            case MessageType::KeyExchangePacket:
+            {
                 break;
+            }
+
+            case MessageType::KeyExchangePacket:
+            {
+                break;
+            }
         }
     }
 }

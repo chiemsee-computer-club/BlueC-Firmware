@@ -13,15 +13,13 @@ void setup()
     Logger::AddBackend(_bleLoggingService);
 
     _displayService = new DisplayService();
-    _loRaService = new LoRaService();
-
-    _bluetoothLowEnergy->AddService(_bleLoggingService);
-    _bluetoothLowEnergy->Advertise();
-    Logger::Debug("BLE initialized");
+    _storageService = new StorageService();
+    _sqliteService = new SqliteService();
+    _loRaService = new LoRaService(_sqliteService);
 
     _displayService->SplashScreen();
-    Logger::Debug("SplashScreen initialized");
-    
+    _storageService->Initialize();
+    _sqliteService->Initialize();
     _loRaService->Initialize();
     Logger::Debug("LoRa initialized");
 
