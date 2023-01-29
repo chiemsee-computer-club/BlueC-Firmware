@@ -4,10 +4,9 @@
 #include <Arduino.h>
 #include "BleServiceBase.hpp"
 
-class BluetoothLowEnergy
+class BleStack
 {
 private:
-    static constexpr const char* characteristicUuid = "012CF118-0915-432C-A69A-59979E61B81A";
     const uint8_t manufactData[4] = { 0x01, 0x02, 0x03, 0x04 };
     const uint8_t serviceData[3] = { 0x00, 0x01, 0x02 };
     bool _initialized = false;
@@ -16,7 +15,7 @@ private:
     static void BlePeripheralConnectHandler(BLEDevice central);
     static void BlePeripheralDisconnectHandler(BLEDevice central);
 public:
-    BluetoothLowEnergy();
+    BleStack();
     void AddService(BleServiceBase* service);
     void Advertise();
     void Update();

@@ -18,14 +18,33 @@ DisplayService::DisplayService()
 void DisplayService::SplashScreen() {
     _display->clearDisplay();
 
-    _display->setCursor(67,10);
+    _display->drawBitmap(5, 5, LOGO32, 32, 32, WHITE);
+
+    _display->setCursor(47, 15);
     _display->println(OSName);
 
-    _display->drawBitmap(10, 10, LOGO44, 44, 44, WHITE);
-
-    _display->setCursor(67, 20);
-
+    _display->setCursor(47, 25);
     _display->println(Version);
+
+    _display->setCursor(20, 50);
+    _display->println("Initializing...");
+
+    _display->display();
+}
+
+void DisplayService::HomeScreen() {
+    _display->clearDisplay();
+
+    _display->drawBitmap(5, 5, LOGO32, 32, 32, WHITE);
+
+    _display->setCursor(47, 15);
+    _display->println(OSName);
+
+    _display->setCursor(47, 25);
+    _display->println(Version);
+
+    _display->setCursor(50, 50);
+    _display->println("Ready");
 
     _display->display();
 }

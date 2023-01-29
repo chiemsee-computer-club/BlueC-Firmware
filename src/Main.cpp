@@ -7,27 +7,38 @@ void setup()
 {
     Logger::AddBackend(new SerialLoggerBackend());
 
-    _bluetoothLowEnergy = new BluetoothLowEnergy();
+    _displayService = new DisplayService();
+
+    _displayService->SplashScreen();
+    Logger::Debug("Drawing SplashScreen");
+
+    _bleStack = new BleStack();
     _bleLoggingService = new BleLoggingService();
 
     Logger::AddBackend(_bleLoggingService);
-
-    _displayService = new DisplayService();
+    
     _storageService = new StorageService();
     _sqliteService = new SqliteService();
     _loRaService = new LoRaService(_sqliteService);
 
-    _displayService->SplashScreen();
+
     _storageService->Initialize();
+    Logger::Debug("StorageService initialized");
+
     _sqliteService->Initialize();
+    Logger::Debug("SQLite initialized");
+
     _loRaService->Initialize();
     Logger::Debug("LoRa initialized");
 
-    _bluetoothLowEnergy->Advertise();
+    _bleStack->Advertise();
+
+    _displayService->HomeScreen();
+    Logger::Debug("Drawing HomeScreen");
 }
 
 void loop()
 {   
     _loRaService->CheckForNewMessages();
-    _bluetoothLowEnergy->Update();
+    _bleStack->Update();
 }

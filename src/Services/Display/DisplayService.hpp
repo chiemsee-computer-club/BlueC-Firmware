@@ -18,6 +18,7 @@ class DisplayService
 public:
     DisplayService();
     void SplashScreen();
+    void HomeScreen();
 
 private:
 	Adafruit_SSD1306* _display = new Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);

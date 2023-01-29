@@ -1,7 +1,7 @@
-#include "BluetoothLowEnergy.hpp"
+#include "BleStack.hpp"
 #include "Services/BleLoggingService.hpp"
 
-BluetoothLowEnergy::BluetoothLowEnergy()
+BleStack::BleStack()
 {
     if (!BLE.begin()) {
         Serial.println("Failed to initialize BLE!");
@@ -14,31 +14,32 @@ BluetoothLowEnergy::BluetoothLowEnergy()
     BLE.setDeviceName("BlueC Device");
     BLE.setScanResponseData(scanData);
 
-    BLE.setEventHandler(BLEConnected, BluetoothLowEnergy::BlePeripheralConnectHandler);
-    BLE.setEventHandler(BLEDisconnected, BluetoothLowEnergy::BlePeripheralDisconnectHandler);
+    BLE.setAppearance(0x0980);
+    BLE.setEventHandler(BLEConnected, BleStack::BlePeripheralConnectHandler);
+    BLE.setEventHandler(BLEDisconnected, BleStack::BlePeripheralDisconnectHandler);
 
     _initialized = true;
 }
 
-void BluetoothLowEnergy::AddService(BleServiceBase* service)
+void BleStack::AddService(BleServiceBase* service)
 {
     BLE.addService(*(service->GetService()));
     _bleAdvertisingData.setAdvertisedService(*(service->GetService()));
 }
 
-void BluetoothLowEnergy::BlePeripheralConnectHandler(BLEDevice central)
+void BleStack::BlePeripheralConnectHandler(BLEDevice central)
 {
     Serial.print("Connected event, central: ");
     Serial.println(central.address());
 }
 
-void BluetoothLowEnergy::BlePeripheralDisconnectHandler(BLEDevice central)
+void BleStack::BlePeripheralDisconnectHandler(BLEDevice central)
 {
     Serial.print("Disconnected event, central: ");
     Serial.println(central.address());
 }
 
-void BluetoothLowEnergy::Advertise()
+void BleStack::Advertise()
 {
     _bleAdvertisingData.setManufacturerData(0x004C, manufactData, sizeof(manufactData));
     _bleAdvertisingData.setAdvertisedServiceData(0xfff0, serviceData, sizeof(serviceData));
@@ -46,7 +47,7 @@ void BluetoothLowEnergy::Advertise()
     BLE.advertise();
 }
 
-void BluetoothLowEnergy::Update()
+void BleStack::Update()
 {
     BLE.poll();
 }
