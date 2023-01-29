@@ -5,5 +5,5 @@ For further information, take a look at this incredible sophisticated network di
 
 ```mermaid {theme="hand"}
 graph TD
-    A[Device A] -->|LoRa connection| B(Device B)
+    A[Device A] -->|BlueC network| B(Device B)
 ```
