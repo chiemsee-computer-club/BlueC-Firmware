@@ -28,6 +28,7 @@ private:
     bool QueryDb(String query, int (*callback)(void*,int,char**,char**));
     bool QueryDb(String query, int (*callback)(void*,int,char**,char**), void* callbackData);
 
+    static int CallbackSelectMessages(void *messageList, int colCount, char **rowValues, char **colNames);
 
 public:
     bool Initialize();

@@ -19,13 +19,13 @@ void DisplayService::SplashScreen() {
     _display->clearDisplay();
 
     _display->setCursor(67,10);
-    _display->println(Config::OSName);
+    _display->println(OSName);
 
     _display->drawBitmap(10, 10, LOGO44, 44, 44, WHITE);
 
     _display->setCursor(67, 20);
 
-    _display->println(Config::Version);
+    _display->println(Version);
 
     _display->display();
 }

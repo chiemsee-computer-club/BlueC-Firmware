@@ -38,12 +38,12 @@ std::list<Message>* SqliteService::GetMessages()
 
     String query = "SELECT * FROM messages;";
 
-    int rq = QueryDb(query, CallbackSelectMessages, (void *)data);
+    QueryDb(query, SqliteService::CallbackSelectMessages, (void *)data);
 
     return data;
 }
 
-static int CallbackSelectMessages(void *messageList, int colCount, char **rowValues, char **colNames)
+int SqliteService::CallbackSelectMessages(void *messageList, int colCount, char **rowValues, char **colNames)
 {
     struct std::list<Message> *list = static_cast<std::list<Message> *>(messageList);
 
