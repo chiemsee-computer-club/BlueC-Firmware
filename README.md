@@ -1,7 +1,7 @@
 # BlueC Firmware
 
 A decentralized network approach using LoRa. <br />
-Take a look at this incredible detailed network diagram below for further information:
+For further information, take a look at this incredible sophisticated network diagram:
 
 ```mermaid {theme="hand"}
 graph TD
