@@ -16,8 +16,6 @@ void LoRaService::Initialize()
     LoRa.setPins(_slaveSelectPin, _resetPin, _digitalPin);
     LoRa.begin(_frequency);
     LoRa.enableCrc();
-
-    Serial.println("LoRa Model started up");
 }
 
 std::string LoRaService::ReadMessagePart(int length)
