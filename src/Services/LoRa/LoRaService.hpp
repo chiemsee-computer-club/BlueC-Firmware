@@ -5,6 +5,7 @@
 #include <SPI.h>
 #include "Entities/Message.hpp"
 #include "Services/LoRa/Entities/MessageType.hpp"
+#include "Services/Sqlite/SqliteService.hpp"
 
 class LoRaService
 {
@@ -19,12 +20,14 @@ private:
     static constexpr int _frequency = 868E6;
     static constexpr int _deviceId = 86;
 
+    SqliteService *_sqliteService;
+
     Message ReadMessageFromRadio();
     std::string ReadMessagePart(int length);
 
 
 public:
-    LoRaService();
+    LoRaService(SqliteService *sqliteService);
     ~LoRaService();
 
     static void Initialize();

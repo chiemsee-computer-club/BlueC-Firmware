@@ -21,6 +21,65 @@ bool SqliteService::CreateTableMessages()
     return SqliteService::QueryDb(query);
 }
 
+bool SqliteService::InsertMessage(Message *message)
+{
+    String query = "INSERT INTO messages (text, senderId, receiverId, timestamp) VALUES (" +
+                   String("'") + String(message->Message.c_str()) + String("', ") +
+                   String("'") + String(message->SenderId.c_str()) + String("', ") +
+                   String("'") + String(message->ReceiverId.c_str()) + String("', ") +
+                   message->Timestamp + String(");");
+
+    return QueryDb(query);
+}
+
+std::list<Message>* SqliteService::GetMessages()
+{
+    std::list<Message> *data = {};
+
+    String query = "SELECT * FROM messages;";
+
+    int rq = QueryDb(query, CallbackSelectMessages, (void *)data);
+
+    return data;
+}
+
+static int CallbackSelectMessages(void *messageList, int colCount, char **rowValues, char **colNames)
+{
+    struct std::list<Message> *list = static_cast<std::list<Message> *>(messageList);
+
+    Message message = Message();
+
+    for (int i = 0; i < colCount; i++)
+    {
+        String colName = String(colNames[i]);
+        if (colName == String("id"))
+        {
+            message.Id = atoi(rowValues[i]);
+        }
+        else if (colName == String("text"))
+        {
+            message.Message = rowValues[i];
+        }
+        else if (colName == String("senderId"))
+        {
+            message.SenderId = atoi(rowValues[i]);
+        }
+        else if (colName == String("receiverId"))
+        {
+            message.ReceiverId = atoi(rowValues[i]);
+        }
+        else if (colName == String("timestamp"))
+        {
+            message.Timestamp = atoi(rowValues[i]);
+        }
+    }
+
+    list->push_back(message);
+
+    return 0;
+}
+
+
 bool SqliteService::OpenDb()
 {
     int openResult = sqlite3_open(_dbName, &_db);
